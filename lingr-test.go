@@ -17,7 +17,7 @@ var nickname = flag.String("nickname", "mattn", "nickname on lingr")
 var speaker_id = flag.String("speakerid", "mattn", "speaker_id on lingr")
 var room = flag.String("room", "vim", "room on lingr")
 var ptype = flag.String("type", "human", "type of poster")
-var icon_url = flag.String("type", "http://mattn.kaoriya.net/images/logo.png", "icon_url of poster")
+var icon_url = flag.String("iconurl", "http://mattn.kaoriya.net/images/logo.png", "icon_url of poster")
 
 type Event struct {
 	Id      int      `json:"event_id"`
