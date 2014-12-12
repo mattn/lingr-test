@@ -41,15 +41,16 @@ type Message struct {
 var reUrl = regexp.MustCompile(`(?:^|[^a-zA-Z0-9])(https?://[a-zA-Z][a-zA-Z0-9_-]*(\.[a-zA-Z0-9][a-zA-Z0-9_-]*)*(:\d+)?(?:/[a-zA-Z0-9_/.\-+%#?&=;@$,!*~]*)?)`)
 
 func main() {
-	if len(os.Args) < 3 {
+	flag.Parse()
+	if flag.NArg() < 2 {
 		fmt.Fprintln(os.Stderr, "usage: lingr-test [options] [bot_id|URL] [text]")
 		flag.PrintDefaults()
 		return
 	}
 
-	uri := os.Args[1]
+	uri := flag.Arg(0)
 	if !reUrl.MatchString(uri) {
-		uri = fmt.Sprintf("http://lingr.com/bot/%s", os.Args[1])
+		uri = fmt.Sprintf("http://lingr.com/bot/%s", flag.Arg(0))
 		doc, err := goquery.NewDocument(uri)
 		if err != nil {
 			log.Fatal(err)
@@ -77,7 +78,7 @@ func main() {
 					Type:            *ptype,
 					SpeakerId:       *speaker_id,
 					Nickname:        *nickname,
-					Text:            strings.Join(os.Args[2:], " "),
+					Text:            strings.Join(flag.Args()[1:], " "),
 					Timestamp:       time.Now().Format(time.RFC822),
 				},
 			},
